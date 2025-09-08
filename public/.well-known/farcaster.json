@@ -1,0 +1,30 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "LegalEase Frame",
+    "subtitle": "Built with Zara",
+    "description": "LegalEase Frame is a Base Mini App built with Zara.",
+    "iconUrl": "https://0co.to/images/zara-2.png",
+    "homeUrl": "https://b20f0f4e96c646978d6d27b9b75cd080-gt31.vercel.app",
+    "splashImageUrl": "https://b20f0f4e96c646978d6d27b9b75cd080-gt31.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "heroImageUrl": "https://b20f0f4e96c646978d6d27b9b75cd080-gt31.vercel.app/image.png",
+    "tagline": "LegalEase Frame",
+    "screenshotUrls": [
+      "https://b20f0f4e96c646978d6d27b9b75cd080-gt31.vercel.app/screenshot.png",
+      "https://b20f0f4e96c646978d6d27b9b75cd080-gt31.vercel.app/screenshot.png"
+    ],
+    "primaryCategory": "social",
+    "tags": [
+      "base",
+      "miniapp",
+      "onchainkit"
+    ],
+    "webhookUrl": "https://b20f0f4e96c646978d6d27b9b75cd080-gt31.vercel.app/api/webhook"
+  }
+}

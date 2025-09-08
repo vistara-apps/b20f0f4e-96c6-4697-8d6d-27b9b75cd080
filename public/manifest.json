@@ -1,0 +1,14 @@
+{
+  "name": "LegalEase Frame",
+  "description": "LegalEase Frame is a Base Mini App built with Zara.",
+  "image": "https://dummyimage.com/1200x628/0a0b0d/ffffff.png&text=OG",
+  "external_url": "https://b20f0f4e-96c6-4697-8d6d-27b9b75cd080.vercel.app",
+  "properties": {
+    "app": {
+      "name": "LegalEase Frame",
+      "description": "LegalEase Frame is a Base Mini App built with Zara.",
+      "url": "https://b20f0f4e-96c6-4697-8d6d-27b9b75cd080.vercel.app",
+      "icon": "https://0co.to/images/zara-2.png"
+    }
+  }
+}
