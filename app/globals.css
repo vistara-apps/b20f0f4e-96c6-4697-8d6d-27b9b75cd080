@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  body {
+    @apply bg-bg text-text-primary;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .frame-button {
+    @apply px-6 py-3 rounded-md font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+  
+  .frame-button-primary {
+    @apply frame-button bg-primary text-white hover:bg-blue-600;
+  }
+  
+  .frame-button-secondary {
+    @apply frame-button bg-gray-200 text-text-primary hover:bg-gray-300;
+  }
+  
+  .info-card {
+    @apply bg-surface rounded-lg p-md shadow-card border border-gray-100;
+  }
+  
+  .info-card-actionable {
+    @apply info-card hover:shadow-lg transition-all duration-200 cursor-pointer;
+  }
+  
+  .text-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200;
+  }
+  
+  .text-input-multiline {
+    @apply text-input resize-none min-h-[100px];
+  }
+  
+  .glass-card {
+    @apply bg-white bg-opacity-80 backdrop-blur-sm border border-white border-opacity-20;
+  }
+}
+
+@layer utilities {
+  .text-display {
+    @apply text-xl font-bold;
+  }
+  
+  .text-heading {
+    @apply text-lg font-semibold;
+  }
+  
+  .text-body {
+    @apply text-base leading-normal;
+  }
+  
+  .text-caption {
+    @apply text-sm text-gray-600;
+  }
+}
