@@ -15,9 +15,11 @@ export const metadata: Metadata = {
   },
   other: {
     'fc:frame': 'vNext',
-    'fc:frame:image': `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/api/og`,
+    'fc:frame:image': `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/api/og/welcome`,
     'fc:frame:button:1': 'Get Legal Advice',
     'fc:frame:button:2': 'Browse Topics',
+    'fc:frame:button:3': 'Templates',
+    'fc:frame:input:text': 'Describe your legal situation...',
     'fc:frame:post_url': `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/api/frame`,
   },
 };
