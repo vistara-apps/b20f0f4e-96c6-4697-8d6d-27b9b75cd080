@@ -78,13 +78,19 @@ Important: This is for informational purposes only and does not constitute legal
 
 export async function generateLegalTemplate(
   templateType: string,
-  context: Record<string, string>,
-  jurisdiction: string
-): Promise<Template> {
+  jurisdiction: string,
+  customFields: Record<string, any> = {},
+  context: string = ''
+): Promise<{
+  content: string;
+  instructions: string;
+  disclaimer: string;
+}> {
   try {
     const prompt = `Generate a legal template for "${templateType}" in ${jurisdiction} jurisdiction.
 
-Context: ${JSON.stringify(context)}
+Custom Fields: ${JSON.stringify(customFields)}
+Context: ${context}
 
 Please create a professional template with:
 1. Proper legal formatting
@@ -94,10 +100,9 @@ Please create a professional template with:
 
 Format as JSON:
 {
-  "title": "Template Title",
   "content": "Template content with [PLACEHOLDER] fields",
-  "usageContext": "When and how to use this template",
-  "variables": ["PLACEHOLDER1", "PLACEHOLDER2"]
+  "instructions": "How to use and customize this template",
+  "disclaimer": "Legal disclaimer about template usage"
 }`;
 
     const completion = await openai.chat.completions.create({
@@ -123,12 +128,9 @@ Format as JSON:
 
     const parsedResponse = JSON.parse(responseText);
     return {
-      id: `template_${Date.now()}`,
-      title: parsedResponse.title || templateType,
       content: parsedResponse.content || 'Template content unavailable',
-      usageContext: parsedResponse.usageContext || 'General use',
-      jurisdiction,
-      variables: parsedResponse.variables || [],
+      instructions: parsedResponse.instructions || 'Follow standard legal document procedures',
+      disclaimer: parsedResponse.disclaimer || 'This template is for informational purposes only and does not constitute legal advice. Consult with a qualified attorney before using.',
     };
   } catch (error) {
     console.error('Error generating legal template:', error);

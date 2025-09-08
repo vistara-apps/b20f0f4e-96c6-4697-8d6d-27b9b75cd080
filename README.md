@@ -1,14 +1,32 @@
 # LegalEase Frame
 
-A Base Mini App that empowers Farcaster users with plain-language legal information and actionable guidance for everyday situations.
+A comprehensive Farcaster Frame that provides plain-language legal information, actionable guidance, and professional legal templates for everyday situations. Built with Next.js and powered by AI.
 
-## Features
+## 🚀 Features
 
-- **Plain-Language Legal Summaries**: Clear, easy-to-understand explanations of common legal rights and procedures
-- **Jurisdiction-Specific Guidance**: Tailored legal information based on user's geographic location
-- **Actionable Next Steps**: Step-by-step guidance on what actions to take
-- **Templated Legal Communications**: Pre-written letters, forms, and messages for common legal scenarios
-- **Legal Resource Linking**: Citations to relevant laws and links to official sources
+### Core Legal Services
+- **Plain-Language Legal Summaries**: Clear, easy-to-understand explanations of complex legal concepts
+- **Jurisdiction-Specific Guidance**: Tailored legal information based on geographic location
+- **Actionable Next Steps**: Step-by-step guidance for legal situations
+- **AI-Powered Analysis**: Advanced legal document analysis and advice generation
+
+### Professional Templates
+- **Legal Document Templates**: Pre-written letters, forms, and legal communications
+- **Custom Template Generation**: AI-generated documents tailored to specific situations
+- **Template Categories**: Demand letters, lease termination, cease & desist, employment complaints, and more
+- **Jurisdiction Compliance**: Templates adapted for specific legal jurisdictions
+
+### Payment & Premium Features
+- **Micro-Transaction Model**: Pay-per-use pricing for premium features
+- **Base Network Integration**: Secure, low-fee payments via Base blockchain
+- **Tiered Access**: Basic advice free, premium features available for small fees
+- **Wallet Integration**: Seamless crypto payments through OnchainKit
+
+### Frame Experience
+- **Interactive UI**: Rich Farcaster Frame interface with multiple interaction flows
+- **Dynamic OG Images**: Context-aware social media previews
+- **Multi-Step Workflows**: Guided user journeys for complex legal processes
+- **Error Handling**: Robust error recovery and user feedback
 
 ## Tech Stack
 
