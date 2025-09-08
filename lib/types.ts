@@ -104,3 +104,120 @@ export interface LegalTopic {
   description: string;
   commonQuestions: string[];
 }
+
+// Payment and transaction types
+export interface PaymentRequest {
+  amount: number;
+  currency: 'ETH' | 'USDC';
+  description: string;
+  queryId?: string;
+  templateId?: string;
+}
+
+export interface PaymentResponse {
+  transactionHash: string;
+  status: 'pending' | 'confirmed' | 'failed';
+  amount: number;
+  currency: string;
+}
+
+// Session management
+export interface UserSession {
+  id: string;
+  farcasterId?: string;
+  walletAddress?: string;
+  jurisdiction: string;
+  queries: Query[];
+  totalSpent: number;
+  createdAt: Date;
+  lastActive: Date;
+}
+
+// Document analysis types
+export interface DocumentAnalysisRequest {
+  documentText: string;
+  documentType?: string;
+  jurisdiction: string;
+  analysisType: 'summary' | 'risks' | 'compliance' | 'full';
+}
+
+export interface DocumentAnalysisResponse {
+  id: string;
+  summary: string;
+  keyPoints: string[];
+  risks: string[];
+  recommendations: string[];
+  compliance: {
+    jurisdiction: string;
+    requirements: string[];
+    violations: string[];
+  };
+  confidence: number;
+}
+
+// Template generation types
+export interface TemplateRequest {
+  templateType: string;
+  jurisdiction: string;
+  context: Record<string, string>;
+  customizations?: Record<string, string>;
+}
+
+export interface GeneratedTemplate extends Template {
+  generatedAt: Date;
+  cost: number;
+  downloadUrl?: string;
+}
+
+// Enhanced API response types
+export interface PaginatedResponse<T> {
+  data: T[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+}
+
+// Frame-specific types
+export interface FrameMetadata {
+  title: string;
+  description: string;
+  image: string;
+  buttons: FrameButton[];
+  inputText?: string;
+  postUrl?: string;
+}
+
+export interface FrameButton {
+  label: string;
+  action: 'post' | 'link' | 'mint' | 'tx';
+  target?: string;
+}
+
+// Error handling types
+export interface AppError {
+  code: string;
+  message: string;
+  details?: Record<string, any>;
+  timestamp: Date;
+}
+
+// Analytics types
+export interface QueryAnalytics {
+  queryId: string;
+  category: LegalCategory;
+  jurisdiction: string;
+  responseTime: number;
+  userSatisfaction?: number;
+  followUpQueries: number;
+}
+
+// Validation schemas
+export interface ValidationResult {
+  isValid: boolean;
+  errors: string[];
+  warnings?: string[];
+}

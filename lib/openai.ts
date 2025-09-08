@@ -139,25 +139,25 @@ Format as JSON:
 export async function analyzeLegalDocument(
   documentText: string,
   jurisdiction: string
-): Promise<LegalInformation> {
+): Promise<LegalAdviceResponse> {
   try {
-    const prompt = `Analyze the following legal document and provide a plain-language summary for ${jurisdiction} jurisdiction:
+    const prompt = `Analyze the following legal document and provide a comprehensive analysis for ${jurisdiction} jurisdiction:
 
 Document: "${documentText.slice(0, 2000)}"
 
 Please provide:
-1. Main purpose and key points
-2. Important terms and conditions
-3. Potential risks or concerns
-4. Recommended actions
+1. Main purpose and key points of the document
+2. Important terms, conditions, and clauses
+3. Potential legal risks or concerns
+4. Recommended actions or next steps
+5. Compliance considerations
 
 Format as JSON:
 {
-  "title": "Document Analysis",
-  "summary": "Plain language summary",
-  "detailedInfo": "Detailed analysis",
-  "actionSteps": ["Action 1", "Action 2"],
-  "tags": ["tag1", "tag2"]
+  "summary": "Plain language summary of the document",
+  "actionSteps": ["Action 1", "Action 2", "Action 3"],
+  "relevantLaws": ["Relevant law 1", "Relevant law 2"],
+  "sources": ["Source 1", "Source 2"]
 }`;
 
     const completion = await openai.chat.completions.create({
@@ -165,7 +165,90 @@ Format as JSON:
       messages: [
         {
           role: 'system',
-          content: 'You are a legal document analyzer that breaks down complex legal language into plain English and identifies key points and risks.'
+          content: 'You are a legal document analyzer that breaks down complex legal language into plain English, identifies key provisions, risks, and provides actionable recommendations.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 0.3,
+      max_tokens: 1500,
+    });
+
+    const responseText = completion.choices[0]?.message?.content;
+    if (!responseText) {
+      throw new Error('No response from OpenAI');
+    }
+
+    try {
+      const parsedResponse = JSON.parse(responseText);
+      return {
+        summary: parsedResponse.summary || 'Document analysis unavailable',
+        actionSteps: parsedResponse.actionSteps || [],
+        relevantLaws: parsedResponse.relevantLaws || [],
+        sources: parsedResponse.sources || [],
+        templates: [],
+      };
+    } catch (parseError) {
+      // Fallback if JSON parsing fails
+      return {
+        summary: responseText.slice(0, 400) + '...',
+        actionSteps: ['Review document with a qualified attorney'],
+        relevantLaws: [],
+        sources: ['Document analysis assistant'],
+        templates: [],
+      };
+    }
+  } catch (error) {
+    console.error('Error analyzing legal document:', error);
+    throw new Error('Failed to analyze legal document');
+  }
+}
+
+export async function generateContextualAdvice(
+  query: string,
+  jurisdiction: string,
+  context: {
+    previousQueries?: string[];
+    userType?: 'individual' | 'business' | 'organization';
+    urgency?: 'low' | 'medium' | 'high';
+  }
+): Promise<LegalAdviceResponse> {
+  try {
+    const contextInfo = [
+      context.previousQueries?.length ? `Previous queries: ${context.previousQueries.join(', ')}` : '',
+      context.userType ? `User type: ${context.userType}` : '',
+      context.urgency ? `Urgency level: ${context.urgency}` : '',
+    ].filter(Boolean).join('\n');
+
+    const prompt = `Provide contextual legal information for ${jurisdiction} jurisdiction:
+
+Query: "${query}"
+
+${contextInfo ? `Context:\n${contextInfo}\n` : ''}
+
+Please provide tailored advice considering the context:
+1. A clear, contextual summary addressing the specific situation
+2. Prioritized action steps based on urgency and user type
+3. Relevant laws or regulations that apply
+4. Resources and next steps
+5. When to seek professional legal help
+
+Format as JSON:
+{
+  "summary": "Contextual summary addressing the situation",
+  "actionSteps": ["Prioritized step 1", "Step 2", "Step 3"],
+  "relevantLaws": ["Relevant law 1", "Relevant law 2"],
+  "sources": ["Resource 1", "Resource 2"]
+}`;
+
+    const completion = await openai.chat.completions.create({
+      model: 'google/gemini-2.0-flash-001',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a contextual legal information assistant. Provide tailored advice based on user context, urgency, and previous interactions. Always emphasize appropriate next steps and when professional help is needed.'
         },
         {
           role: 'user',
@@ -181,18 +264,27 @@ Format as JSON:
       throw new Error('No response from OpenAI');
     }
 
-    const parsedResponse = JSON.parse(responseText);
-    return {
-      id: `analysis_${Date.now()}`,
-      title: parsedResponse.title || 'Document Analysis',
-      summary: parsedResponse.summary || 'Analysis unavailable',
-      detailedInfo: parsedResponse.detailedInfo || '',
-      actionSteps: parsedResponse.actionSteps || [],
-      jurisdiction,
-      tags: parsedResponse.tags || [],
-    };
+    try {
+      const parsedResponse = JSON.parse(responseText);
+      return {
+        summary: parsedResponse.summary || 'Contextual advice unavailable',
+        actionSteps: parsedResponse.actionSteps || [],
+        relevantLaws: parsedResponse.relevantLaws || [],
+        sources: parsedResponse.sources || [],
+        templates: [],
+      };
+    } catch (parseError) {
+      // Fallback if JSON parsing fails
+      return {
+        summary: responseText.slice(0, 350) + '...',
+        actionSteps: ['Consult with a qualified attorney for specific advice'],
+        relevantLaws: [],
+        sources: ['Contextual legal assistant'],
+        templates: [],
+      };
+    }
   } catch (error) {
-    console.error('Error analyzing legal document:', error);
-    throw new Error('Failed to analyze legal document');
+    console.error('Error generating contextual advice:', error);
+    throw new Error('Failed to generate contextual legal advice');
   }
 }
